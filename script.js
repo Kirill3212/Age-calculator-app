@@ -10,12 +10,18 @@ const yearDisplay = document.getElementById("yearDisplay");
 const monthDisplay = document.getElementById("monthDisplay");
 const dayDisplay = document.getElementById("dayDisplay");
 
+// Date
 let date = new Date();
 let year = date.getFullYear();
 let month = 1 + date.getMonth();
 let day = date.getDate();
-
 let months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+function errorUI(input, errorTxt) {
+  input.style.borderColor = "red";
+  input.nextElementSibling.textContent = errorTxt;
+  input.previousElementSibling.style.color = "red";
+}
 
 function validate() {
   const inputs = document.querySelectorAll("input");
@@ -25,18 +31,15 @@ function validate() {
   inputs.forEach((i) => {
     if (!i.value) {
       validation = false;
-      i.style.borderColor = "red";
-      i.nextElementSibling.textContent = "This field is required";
-      i.previousElementSibling.style.color = "red";
+      errorUI(i, "This field is required");
     } else if (monthInput.value > 12) {
-      monthInput.previousElementSibling.style.color = "red";
-      monthInput.style.borderColor = "red";
-      monthInput.nextElementSibling.textContent = "must be valid month";
+      errorUI(monthInput, "must be valid month");
       validation = false;
     } else if (dayInput.value > 31) {
-      dayInput.previousElementSibling.style.color = "red";
-      dayInput.style.borderColor = "red";
-      dayInput.nextElementSibling.textContent = "must be valid day";
+      errorUI(dayInput, "must be valid day");
+      validation = false;
+    } else if (yearInput.value > year) {
+      errorUI(yearInput, "must be in the past");
       validation = false;
     } else {
       i.previousElementSibling.style.color = "hsl(0, 1%, 44%)";
@@ -51,23 +54,24 @@ function validate() {
 function handleSubmit() {
   if (validate()) {
     if (dayInput.value > day) {
-      day = day + months[month - 1]; // 47 ... 17 + 30
-      month = month - 1; // 8 ...  сентябрь 9 месяц 30 дней
-      console.log(day);
-      console.log(month);
+      day = day + months[month - 1];
+      month = month - 1;
     }
     if (monthInput.value > month) {
-      month = month + 12; // 21 ... 9 + 12
-      year = year - 1; // 2022
+      month = month + 12;
+      year = year - 1;
+    }
+    if (monthInput.value < month) {
+      year = year;
     }
 
     const d = day - dayInput.value;
     const m = month - monthInput.value;
     const y = year - yearInput.value;
 
-    yearDisplay.innerHTML = y;
-    monthDisplay.innerHTML = m;
     dayDisplay.innerHTML = d;
+    monthDisplay.innerHTML = m;
+    yearDisplay.innerHTML = y;
   }
 }
 
@@ -75,3 +79,5 @@ form.addEventListener("submit", (e) => {
   e.preventDefault();
   handleSubmit();
 });
+
+console.log(month);
