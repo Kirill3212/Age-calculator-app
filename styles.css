@@ -28,7 +28,7 @@ body{
 }
 
 .container {
-   width: 600px;
+   width: 550px;
    background-color: var(--White);
    border-radius: 1rem 1rem 7rem 1rem;
    padding: 1.5rem;
@@ -41,7 +41,7 @@ body{
 .date{
     display: flex;
     justify-content: space-between;
-    width: 70%;
+    width: 80%;
     height: 100px;
 }
 
@@ -92,6 +92,10 @@ input:focus{
     border: 1px solid var(--Light-grey);
 }
 
+.showHr{
+    display: none;
+}
+
 #submit-btn{
     background-color: var(--Purple);
     padding: 10px;
@@ -112,4 +116,24 @@ input:focus{
 .outcome h1 span{
     color: var(--Purple);
     margin-right: 3px;
+}
+
+@media (max-width: 505px) {
+.container{
+    width: 370px;
+}
+.date {
+    width: 100%;
+}
+input {
+    width: 90px;
+    height: 80px;
+}
+.submit{
+    margin-top: 46px;
+    justify-content: center;
+}
+.showHr{
+    display: block;
+}
 }

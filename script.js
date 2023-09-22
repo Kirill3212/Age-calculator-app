@@ -18,6 +18,7 @@ let day = date.getDate();
 let months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
 function errorUI(input, errorTxt) {
+  console.log(input.id);
   input.style.borderColor = "red";
   input.nextElementSibling.textContent = errorTxt;
   input.previousElementSibling.style.color = "red";
@@ -61,7 +62,7 @@ function handleSubmit() {
       month = month + 12;
       year = year - 1;
     }
-    if (monthInput.value < month) {
+    if (monthInput.value <= month) {
       year = year;
     }
 
@@ -79,5 +80,3 @@ form.addEventListener("submit", (e) => {
   e.preventDefault();
   handleSubmit();
 });
-
-console.log(month);
